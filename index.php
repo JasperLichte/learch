@@ -1,11 +1,22 @@
 <?php
 
-require_once 'autoload.php';
+require_once 'vendor/autoload.php';
 
-use routes\Router;
+use Rendering\Renderer;
+use Request\Request;
+use Routing\MatchedNotAMiddlewareException;
+use Routing\NoRouteMatchedException;
+use Routing\Router;
 
-echo (new Router())
-    ->get('/test', \actions\TestAction::class)
-    ->get('/page/([0-9]*)', \actions\ParamTestAction::class)
-    ->view('/([0-9]*)', \views\HelloWorldView::class)
-    ->run();
+try {
+    $middleWare = (new Router())
+        ->get('/', \Views\HelloWorldView::class)
+        ->view('/1', \Actions\HelloWorldAction::class)
+        ->match(Request::fromGlobals());
+} catch (NoRouteMatchedException|MatchedNotAMiddlewareException $e) {
+    $middleWare = new \Views\Err404View();
+}
+
+$middleWare->run();
+
+echo Renderer::byMiddleware($middleWare)->render();
