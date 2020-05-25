@@ -139,17 +139,22 @@ class Request
 
     public function getRequestedPath(Environment $env): string
     {
-        $parsedUrl = parse_url($this->getServer('REQUEST_URI'));
-        $path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
+        $requestedUrl = $this->getRequestedUrl();
 
         try {
-            $root = $env->get('ROOT');
-            $pos = strpos($path, $root);
+            $appUrl = $env->get('APP_URL');
+            $pos = strpos($requestedUrl, $appUrl);
             if ($pos !== false) {
-                $path = substr_replace($path, '', $pos, strlen($root));
+                return substr_replace($requestedUrl, '', $pos, strlen($appUrl));
             }
         } catch (EnvNotSetException $e) {}
-        return $path;
+        return '';
+    }
+
+    public function getRequestedUrl(): string
+    {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
+            . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     }
 
     public function getRequestMethod(): string
