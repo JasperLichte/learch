@@ -16,9 +16,13 @@ abstract class AppContainer
     /** @var Connection */
     protected $db;
 
+    /** @var Environment */
+    protected $env;
+
     public function __construct()
     {
-        $this->db = Connection::getInstance(Environment::getInstance());
+        $this->env = Environment::getInstance();
+        $this->db = Connection::getInstance($this->env);
     }
 
     public function getReq(): Request

@@ -6,16 +6,20 @@ use Models\ResponseModel;
 use Models\ViewModel;
 use Rendering\Views\View;
 
-class HelloWorldView extends View
+class HomeView extends View
 {
 
     public function getModel(): ResponseModel
     {
-        return new ViewModel();
+        $model = new ViewModel();
+
+        $model->setTitle('Home');
+
+        return $model;
     }
 
     function getTemplate(): string
     {
-        return '@pages/hello_world';
+        return '@pages/home';
     }
 }

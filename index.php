@@ -10,11 +10,15 @@ use Routing\Router;
 
 try {
     $middleWare = (new Router())
-        ->get('/', \Views\HelloWorldView::class)
-        ->group('/api', function (Router $router) {
+        ->group('/', function (Router $router) {
             return $router
-                ->get('/1', \Actions\HelloWorldAction::class)
-                ->get('/huhu', \Views\HelloWorldView::class);
+                ->get('/', \Views\HomeView::class);
+        })
+        ->group('/api', function (Router $router) {
+            return $router->group('/strava', function (Router $router) {
+                return $router
+                    ->get('/', \Actions\GetStravaDataAction::class);
+            });
         })
         ->match(Request::fromGlobals());
 } catch (NoRouteMatchedException|MatchedNotAMiddlewareException $e) {

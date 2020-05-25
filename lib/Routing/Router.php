@@ -31,12 +31,6 @@ class Router
         return $this;
     }
 
-    public function view(string $expression, string $middlewareName): Router
-    {
-        $this->routes[] = new GetRoute($expression, $middlewareName);
-        return $this;
-    }
-
     public function group(string $expression, Closure $callback): Router
     {
         $groupRouter = $callback(new Router());

@@ -24,6 +24,7 @@ class ViewRenderer extends Renderer
         $loader->addPath($basePath . '/', '__main__');
         $loader->addPath($basePath . '/templates/pages', 'pages');
         $loader->addPath($basePath . '/templates/components', 'components');
+        $loader->addPath($basePath . '/templates/components/document', 'document');
         $loader->addPath($basePath . '/templates/components/common', 'common');
 
         $this->twig = new Environment($loader);
