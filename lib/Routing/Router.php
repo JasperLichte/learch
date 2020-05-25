@@ -40,7 +40,8 @@ class Router
         }
 
         foreach ($groupRouter->getRoutes() as $route) {
-            $this->routes[] = $route->setExpression($expression . $route->getExpression());
+            $route->setExpression($expression . $route->getExpression());
+            $this->routes[] = $route;
         }
 
         return $this;
