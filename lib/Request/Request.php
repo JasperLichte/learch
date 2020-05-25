@@ -16,6 +16,9 @@ class Request
     /** @var array */
     private $server = [];
 
+    /** @var array */
+    private $session = [];
+
     /** @var string[] */
     private $queryStringParams = [];
 
@@ -27,7 +30,8 @@ class Request
         return (new Request())
             ->setGet($_GET)
             ->setPost($_POST)
-            ->setServer($_SERVER);
+            ->setServer($_SERVER)
+            ->setSession($_SESSION);
     }
 
     private function setPost(array $post): Request
@@ -48,6 +52,12 @@ class Request
         return $this;
     }
 
+    private function setSession(array $session): Request
+    {
+        $this->session = $session;
+        return $this;
+    }
+
     public function getAllPost(): array
     {
         return $this->post;
@@ -61,6 +71,11 @@ class Request
     public function getAllServer(): array
     {
         return $this->server;
+    }
+
+    public function getAllSession(): array
+    {
+        return $this->session;
     }
 
     public function issetPost(string $key): bool
@@ -78,6 +93,11 @@ class Request
         return isset($this->server[$key]);
     }
 
+    public function issetSession(string $key): bool
+    {
+        return isset($this->session[$key]);
+    }
+
     public function getPost(string $key): string
     {
         return $this->post[$key];
@@ -91,6 +111,19 @@ class Request
     public function getServer(string $key): string
     {
         return $this->server[$key];
+    }
+
+    public function getSession(string $key): string
+    {
+        return $this->session[$key];
+    }
+
+    public function setSessionValue(string $key, $value): Request
+    {
+        $this->session[$key] = $value;
+        $_SESSION[$key] = $value;
+
+        return $this;
     }
 
     public function getQueryStringParams(): array
@@ -122,6 +155,12 @@ class Request
     public function getRequestMethod(): string
     {
         return $this->getServer('REQUEST_METHOD');
+    }
+
+    public function redirectTo(string $url)
+    {
+        header('Location: ' . $url);
+        exit();
     }
 
 }

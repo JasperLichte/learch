@@ -17,4 +17,7 @@ class AthleteModel
     /** @var AthleteStatsModel */
     public $stats = null;
 
+    /** @var ActivityModel[] */
+    public $activities = [];
+
 }

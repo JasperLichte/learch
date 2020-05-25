@@ -3,17 +3,14 @@
 namespace External\Strava;
 
 use Config\Environment;
+use Config\EnvNotSetException;
 use External\HttpRequest;
+use External\Strava\Models\ActivityModel;
 use External\Strava\Models\AthleteModel;
 use External\Strava\Models\AthleteStatsModel;
 
 class StravaApi
 {
-
-    /**
-     * @var Environment
-     */
-    private $env;
 
     private const BASE_URL = 'https://www.strava.com/api/v3/';
 
@@ -22,14 +19,32 @@ class StravaApi
      */
     private $httpRequest;
 
+    public function __construct(string $accessToken)
+    {
+        $this->httpRequest = (new HttpRequest())->addHeader('Authorization: Bearer ' . $accessToken);
+    }
+
     /**
      * @param Environment $env
-     * @throws \Config\EnvNotSetException
+     * @param string $code
+     * @return string
+     * @throws NoAccesTokenException
+     * @throws EnvNotSetException
      */
-    public function __construct(Environment $env)
+    public static function getAccessToken(Environment $env, string $code): string
     {
-        $this->env = $env;
-        $this->httpRequest = (new HttpRequest())->addHeader('Authorization: Bearer ' . $this->env->get('STRAVA_ACCESS_TOKEN'));
+        $url = 'https://www.strava.com/oauth/token' .
+            '?client_id=' . $env->get('STRAVA_CLIENT_ID') .
+            '&client_secret=' . $env->get('STRAVA_CLIENT_SECRET') .
+            '&code=' . $code .
+            '&grant_type=authorization_code';
+
+        $result = (new HttpRequest())->setUrl($url)->setMethod('post')->run();
+
+        if (!isset($result['access_token']) || empty($result['access_token'])) {
+            throw new NoAccesTokenException();
+        }
+        return $result['access_token'];
     }
 
     public function getAthlete(): ?AthleteModel
@@ -49,6 +64,7 @@ class StravaApi
         $model->country = $apiRes['country'];
         $model->profileImg = $apiRes['profile'];
         $model->stats = $this->getAthleteStats($model->id);
+        $model->activities = $this->getAthleteActivities();
 
         return $model;
     }
@@ -66,6 +82,33 @@ class StravaApi
         $model->biggestClimbElevationGain = $apiRes['biggest_climb_elevation_gain'];
 
         return $model;
+    }
+
+    /**
+     * @param int $id
+     * @return ActivityModel[]
+     */
+    private function getAthleteActivities(): array
+    {
+        $apiRes = $this->httpRequest->setUrl(self::BASE_URL . 'athlete/activities/')->run();
+        if (empty($apiRes) || !is_array($apiRes)) {
+            return null;
+        }
+
+        $models = [];
+        foreach ($apiRes as $activity) {
+            $model = new ActivityModel();
+
+            $model->id = $activity['id'] ?? 0;
+            $model->name = $activity['name'] ?? '';
+            $model->distance = $activity['distance'] ?? 0;
+            $model->movingTime = $activity['moving_time'] ?? 0;
+            $model->elapsedTime = $activity['elapsed_time'] ?? 0;
+            $model->total_elevation_gain = $apiRes['total_elevation_gain'] ?? 0;
+
+            $models[] = $model;
+        }
+        return $models;
     }
 
 }

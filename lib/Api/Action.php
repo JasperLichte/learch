@@ -11,7 +11,7 @@ abstract class Action extends AppContainer
     /** @var Response */
     protected $res;
 
-    public function __construct()
+    final public function __construct()
     {
         parent::__construct();
         $this->res = new Response();
