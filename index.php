@@ -11,7 +11,11 @@ use Routing\Router;
 try {
     $middleWare = (new Router())
         ->get('/', \Views\HelloWorldView::class)
-        ->view('/1', \Actions\HelloWorldAction::class)
+        ->group('/api', function (Router $router) {
+            return $router
+                ->get('/1', \Actions\HelloWorldAction::class)
+                ->get('/huhu', \Views\HelloWorldView::class);
+        })
         ->match(Request::fromGlobals());
 } catch (NoRouteMatchedException|MatchedNotAMiddlewareException $e) {
     $middleWare = new \Views\Err404View();

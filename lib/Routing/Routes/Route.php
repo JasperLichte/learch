@@ -26,9 +26,10 @@ abstract class Route
         return $this->expression;
     }
 
-    public function setExpression(string $expression)
+    public function setExpression(string $expression): Route
     {
         $this->expression = $expression;
+        return $this;
     }
 
     public function getMiddlewareName(): string

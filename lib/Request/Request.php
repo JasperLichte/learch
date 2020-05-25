@@ -2,6 +2,9 @@
 
 namespace Request;
 
+use Config\Environment;
+use Config\EnvNotSetException;
+
 class Request
 {
     /** @var array */
@@ -101,10 +104,19 @@ class Request
         return $this;
     }
 
-    public function getRequestedPath(): string
+    public function getRequestedPath(Environment $env): string
     {
         $parsedUrl = parse_url($this->getServer('REQUEST_URI'));
-        return (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
+        $path = (isset($parsedUrl['path']) ? $parsedUrl['path'] : '/');
+
+        try {
+            $root = $env->get('ROOT');
+            $pos = strpos($path, $root);
+            if ($pos !== false) {
+                $path = substr_replace($path, '', $pos, strlen($root));
+            }
+        } catch (EnvNotSetException $e) {}
+        return $path;
     }
 
     public function getRequestMethod(): string

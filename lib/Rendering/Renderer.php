@@ -20,7 +20,7 @@ abstract class Renderer
         return new ActionRenderer($middleware);
     }
 
-    private function __construct(AppContainer $middleware)
+    protected function __construct(AppContainer $middleware)
     {
         $this->middleware = $middleware;
     }

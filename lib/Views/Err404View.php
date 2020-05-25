@@ -16,6 +16,6 @@ class Err404View extends View
 
     function getTemplate(): string
     {
-        return '@pages/errors/404.twig';
+        return '@pages/errors/404';
     }
 }

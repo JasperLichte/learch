@@ -2,6 +2,7 @@
 
 namespace Request;
 
+use Config\Environment;
 use Database\Connection;
 use Models\ResponseModel;
 use Rendering\Views\View;
@@ -17,7 +18,7 @@ abstract class AppContainer
 
     public function __construct()
     {
-        $this->db = Connection::getInstance();
+        $this->db = Connection::getInstance(Environment::getInstance());
     }
 
     public function getReq(): Request

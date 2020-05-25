@@ -1,5 +1,9 @@
 {
   "autoload": {
     "psr-4": {"": "lib/"}
+  },
+  "require": {
+    "vlucas/phpdotenv": "^4.1",
+    "twig/twig": "^2.0"
   }
 }

@@ -2,6 +2,8 @@
 
 namespace Routing;
 
+use Closure;
+use Config\Environment;
 use Request\AppContainer;
 use Request\Request;
 use Routing\Routes\GetRoute;
@@ -35,6 +37,20 @@ class Router
         return $this;
     }
 
+    public function group(string $expression, Closure $callback): Router
+    {
+        $groupRouter = $callback(new Router());
+        if (!($groupRouter instanceof Router)) {
+            return $this;
+        }
+
+        foreach ($groupRouter->getRoutes() as $route) {
+            $this->routes[] = $route->setExpression($expression . $route->getExpression());
+        }
+
+        return $this;
+    }
+
     /**
      * @param Request $request
      * @return AppContainer
@@ -43,7 +59,10 @@ class Router
      */
     public function match(Request $request)
     {
-        $actionName = $this->actionNameByPath($request->getRequestedPath(), $request->getRequestMethod());
+        $actionName = $this->actionNameByPath(
+            $request->getRequestedPath(Environment::getInstance()),
+            $request->getRequestMethod()
+        );
         $action = new $actionName;
 
         if (!($action instanceof AppContainer)) {
@@ -76,6 +95,11 @@ class Router
         }
 
         throw new NoRouteMatchedException();
+    }
+
+    public function getRoutes(): array
+    {
+        return $this->routes;
     }
 
 }

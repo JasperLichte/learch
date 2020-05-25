@@ -16,6 +16,6 @@ class HelloWorldView extends View
 
     function getTemplate(): string
     {
-        return '@pages/helloWorld.twig';
+        return '@pages/hello_world';
     }
 }
