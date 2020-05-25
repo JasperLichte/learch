@@ -15,10 +15,11 @@ try {
                 ->get('/', \Views\HomeView::class);
         })
         ->group('/api', function (Router $router) {
-            return $router->group('/strava', function (Router $router) {
-                return $router
-                    ->get('/', \Actions\GetStravaDataAction::class);
-            });
+            return $router
+                ->group('/strava', function (Router $router) {
+                    return $router
+                        ->get('/', \Actions\GetStravaDataAction::class);
+                });
         })
         ->match(Request::fromGlobals());
 } catch (NoRouteMatchedException|MatchedNotAMiddlewareException $e) {
