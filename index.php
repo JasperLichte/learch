@@ -12,10 +12,7 @@ use Routing\Router;
 
 try {
     $middleWare = (new Router())
-        ->group('/', function (Router $router) {
-            return $router
-                ->get('/', \Views\HomeView::class);
-        })
+        ->get('/', \Views\HomeView::class)
         ->group('/api', function (Router $router) {
             return $router
                 ->group('/vendor', function (Router $router) {
