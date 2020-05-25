@@ -2,13 +2,15 @@
 
 namespace External;
 
+use Util\Url;
+
 class HttpRequest
 {
 
     /**
-     * @var string
+     * @var Url
      */
-    private $url = '';
+    private $url = null;
 
     /**
      * @var string
@@ -25,7 +27,7 @@ class HttpRequest
      */
     private $header = [];
 
-    public function setUrl(string $url): HttpRequest
+    public function setUrl(Url $url): HttpRequest
     {
         $this->url = $url;
         return $this;
@@ -66,7 +68,9 @@ class HttpRequest
                 break;
         }
 
-        curl_setopt($curl, CURLOPT_URL, $this->url);
+        if ($this->url !== null) {
+            curl_setopt($curl, CURLOPT_URL, (string)$this->url);
+        }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->header);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);

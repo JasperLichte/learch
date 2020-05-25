@@ -7,6 +7,9 @@ use External\Strava\Models\AthleteModel;
 class HomeViewModel extends ViewModel
 {
 
+    /** @var bool */
+    private $stravaIsAuthenticated = false;
+
     /** @var AthleteModel|null */
     private $stravaAthlete = null;
 
@@ -19,6 +22,17 @@ class HomeViewModel extends ViewModel
     public function getStravaAthlete(): AthleteModel
     {
         return $this->stravaAthlete;
+    }
+
+    public function setStravaIsAuthenticated(bool $stravaIsAuthenticated): HomeViewModel
+    {
+        $this->stravaIsAuthenticated = $stravaIsAuthenticated;
+        return $this;
+    }
+
+    public function isStravaIsAuthenticated(): bool
+    {
+        return $this->stravaIsAuthenticated;
     }
 
 }

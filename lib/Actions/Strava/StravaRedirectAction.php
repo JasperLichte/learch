@@ -6,12 +6,10 @@ use Api\Action;
 use Config\EnvNotSetException;
 use External\Strava\NoAccesTokenException;
 use External\Strava\StravaApi;
+use Util\Url;
 
 class StravaRedirectAction extends Action
 {
-
-    /** @var string */
-    private $code;
 
     public function run(): void
     {
@@ -20,10 +18,8 @@ class StravaRedirectAction extends Action
             return;
         }
 
-        $this->code = $this->req->getGet('code');
-
         try {
-            $accessToken = StravaApi::getAccessToken($this->env, $this->code);
+            $accessToken = StravaApi::getAccessToken($this->env, $this->req->getGet('code'));
         } catch (EnvNotSetException|NoAccesTokenException $e) {
             $this->res->setStatus(500);
             return;
@@ -32,7 +28,7 @@ class StravaRedirectAction extends Action
         $this->req->setSessionValue('access_token', $accessToken);
 
         try {
-            $this->req->redirectTo($this->env->get('APP_URL'));
+            $this->req->redirectTo(Url::to('/'));
         } catch (EnvNotSetException $e) {
             $this->res->setStatus(500);
         }

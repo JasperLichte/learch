@@ -11,7 +11,7 @@ class Err404View extends View
 
     public function getModel(): ResponseModel
     {
-        return new ViewModel($this->req->getRequestedPath($this->env));
+        return new ViewModel('*');
     }
 
     function getTemplate(): string

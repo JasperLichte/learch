@@ -1,27 +1,7 @@
 {% include '@document/start.twig' %}
 
 <main>
-    <h1>
-        <img src="{{ model.stravaAthlete.profileImg }}" alt="" />
-        {{ model.stravaAthlete.firstName ~ ' ' ~ model.stravaAthlete.lastName }}
-    </h1>
-    <ul>
-        <li>{{ model.stravaAthlete.city }}</li>
-        <li>{{ model.stravaAthlete.state }}</li>
-        <li>{{ model.stravaAthlete.country }}</li>
-    </ul>
-
-    <ul>
-        {% for activity in model.stravaAthlete.activities %}
-            <li>
-                <h4>{{ activity.name }}</h4>
-                <ul>
-                    <li>{{ activity.distance }}m</li>
-                    <li>{{ activity.movingTime }}min</li>
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
+    {% include '@components/strava/athlete-info.twig' %}
 </main>
 
 {% include '@document/end.twig' %}

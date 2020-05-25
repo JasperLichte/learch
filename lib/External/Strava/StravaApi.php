@@ -8,6 +8,7 @@ use External\HttpRequest;
 use External\Strava\Models\ActivityModel;
 use External\Strava\Models\AthleteModel;
 use External\Strava\Models\AthleteStatsModel;
+use Util\Url;
 
 class StravaApi
 {
@@ -33,11 +34,12 @@ class StravaApi
      */
     public static function getAccessToken(Environment $env, string $code): string
     {
-        $url = 'https://www.strava.com/oauth/token' .
-            '?client_id=' . $env->get('STRAVA_CLIENT_ID') .
-            '&client_secret=' . $env->get('STRAVA_CLIENT_SECRET') .
-            '&code=' . $code .
-            '&grant_type=authorization_code';
+        $url = (new Url('https://www.strava.com/oauth/token'))->addGetParams([
+            'client_id'     => $env->get('STRAVA_CLIENT_ID'),
+            'client_secret' => $env->get('STRAVA_CLIENT_SECRET'),
+            'code'          => $code,
+            'grant_type'    => 'authorization_code',
+        ]);
 
         $result = (new HttpRequest())->setUrl($url)->setMethod('post')->run();
 
@@ -49,7 +51,7 @@ class StravaApi
 
     public function getAthlete(): ?AthleteModel
     {
-        $apiRes = $this->httpRequest->setUrl(self::BASE_URL . 'athlete/')->run();
+        $apiRes = $this->httpRequest->setUrl(new Url(self::BASE_URL . 'athlete/'))->run();
         if (empty($apiRes)) {
             return null;
         }
@@ -71,7 +73,7 @@ class StravaApi
 
     private function getAthleteStats(int $id): ?AthleteStatsModel
     {
-        $apiRes = $this->httpRequest->setUrl(self::BASE_URL . 'athletes/' . $id . '/stats/')->run();
+        $apiRes = $this->httpRequest->setUrl(new Url(self::BASE_URL . 'athletes/' . $id . '/stats/'))->run();
         if (empty($apiRes)) {
             return null;
         }
@@ -90,7 +92,7 @@ class StravaApi
      */
     private function getAthleteActivities(): array
     {
-        $apiRes = $this->httpRequest->setUrl(self::BASE_URL . 'athlete/activities/')->run();
+        $apiRes = $this->httpRequest->setUrl(new Url(self::BASE_URL . 'athlete/activities/'))->run();
         if (empty($apiRes) || !is_array($apiRes)) {
             return null;
         }

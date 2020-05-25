@@ -2,7 +2,7 @@
 
 session_start();
 
-require_once 'vendor/autoload.php';
+require_once 'base.php';
 
 use Rendering\Renderer;
 use Request\Request;
@@ -22,6 +22,7 @@ try {
                     return $router
                         ->group('/strava', function (Router $router) {
                             return $router
+                                ->get('/authenticate', \Actions\Strava\StravaAuthenticateAction::class)
                                 ->get('/redirect', \Actions\Strava\StravaRedirectAction::class);
                         })
                         ->group('/google', function (Router $router) {

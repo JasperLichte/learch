@@ -4,7 +4,11 @@ namespace Rendering;
 
 use Request\AppContainer;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
+use Util\Url;
 
 class ViewRenderer extends Renderer
 {
@@ -32,15 +36,18 @@ class ViewRenderer extends Renderer
 
     /**
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function render(): string
     {
         return $this->twig->render(
             $this->middleware->getTemplate() . '.twig',
-            ['model' => $this->middleware->getModel(),]
+            [
+                'model' => $this->middleware->getModel(),
+                'url' => new Url(''),
+            ],
         );
     }
 
