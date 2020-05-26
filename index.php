@@ -12,10 +12,11 @@ use Routing\Router;
 
 try {
     $middleWare = (new Router())
-        ->get('/', \Views\HomeView::class)
+        ->view('/news', \Views\News\NewsView::class)
+        ->view('/strava', \Views\Strava\StravaView::class)
         ->group('/api', function (Router $router) {
             return $router
-                ->group('/vendor', function (Router $router) {
+                ->group('/v1', function (Router $router) {
                     return $router
                         ->group('/strava', function (Router $router) {
                             return $router

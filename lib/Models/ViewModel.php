@@ -1,8 +1,6 @@
 <?php
 
-namespace Models\Views;
-
-use Models\ResponseModel;
+namespace Models;
 
 class ViewModel extends ResponseModel
 {

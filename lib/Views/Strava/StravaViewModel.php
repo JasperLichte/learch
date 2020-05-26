@@ -1,10 +1,11 @@
 <?php
 
-namespace Models\Views;
+namespace Views\Strava;
 
 use External\Strava\Models\AthleteModel;
+use Models\ViewModel;
 
-class HomeViewModel extends ViewModel
+class StravaViewModel extends ViewModel
 {
 
     /** @var bool */
@@ -13,7 +14,7 @@ class HomeViewModel extends ViewModel
     /** @var AthleteModel|null */
     private $stravaAthlete = null;
 
-    public function setStravaAthlete(AthleteModel $stravaAthlete): HomeViewModel
+    public function setStravaAthlete(AthleteModel $stravaAthlete): StravaViewModel
     {
         $this->stravaAthlete = $stravaAthlete;
         return $this;
@@ -24,7 +25,7 @@ class HomeViewModel extends ViewModel
         return $this->stravaAthlete;
     }
 
-    public function setStravaIsAuthenticated(bool $stravaIsAuthenticated): HomeViewModel
+    public function setStravaIsAuthenticated(bool $stravaIsAuthenticated): StravaViewModel
     {
         $this->stravaIsAuthenticated = $stravaIsAuthenticated;
         return $this;

@@ -2,6 +2,7 @@
 
 namespace Rendering;
 
+use Models\ResponseModel;
 use Request\AppContainer;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -42,12 +43,17 @@ class ViewRenderer extends Renderer
      */
     public function render(): string
     {
+        $dependencies = [
+            'model' => $this->middleware->getModel(),
+            'url' => new Url(''),
+        ];
+
         return $this->twig->render(
-            $this->middleware->getTemplate() . '.twig',
-            [
-                'model' => $this->middleware->getModel(),
-                'url' => new Url(''),
-            ],
+            '@document/skeleton.twig',
+            array_merge(
+                $dependencies,
+                ['template' => $this->middleware->getTemplate() . '.twig']
+            )
         );
     }
 

@@ -14,7 +14,7 @@ class StravaAuthenticateAction extends Action
         try {
             $url = (new Url('https://www.strava.com/oauth/authorize'))->addGetParams([
                 'client_id' => $this->env->get('STRAVA_CLIENT_ID'),
-                'redirect_uri' => (string)Url::to('/api/vendor/strava/redirect'),
+                'redirect_uri' => (string)Url::to('/api/v1/strava/redirect'),
                 'response_type' => 'code',
                 'scope' => 'read,activity:read_all',
             ]);

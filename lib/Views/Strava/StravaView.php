@@ -1,28 +1,28 @@
 <?php
 
-namespace Views;
+namespace Views\Strava;
 
 use External\Strava\StravaApi;
 use Models\ResponseModel;
-use Models\Views\HomeViewModel;
 use Rendering\Views\View;
 
-class HomeView extends View
+class StravaView extends View
 {
 
-    /** @var HomeViewModel */
+    /** @var StravaViewModel */
     private $model;
 
     public function run(): void
     {
-        $this->model = new HomeViewModel($this->req->getRequestedPath($this->env));
+        $this->model = new StravaViewModel($this->req->getRequestedPath($this->env));
 
         $this->model->setStravaIsAuthenticated($this->req->issetSession('access_token'));
-        $this->model->setTitle('Start');
+        $this->model->setTitle('Strava');
 
         if ($this->model->isStravaIsAuthenticated()) {
             $strava = new StravaApi($this->req->getSession('access_token'));
             $this->model->setStravaAthlete($strava->getAthlete());
+            $this->model->setTitle($this->model->getStravaAthlete()->userName);
         }
     }
 
@@ -33,7 +33,7 @@ class HomeView extends View
 
     function getTemplate(): string
     {
-        return '@pages/home';
+        return '@pages/strava';
     }
 
 }
