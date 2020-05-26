@@ -2,14 +2,19 @@
 
 namespace Rendering;
 
+use Api\Action;
 use Api\Response;
-use Models\ResponseModel;
 
 class ActionRenderer extends Renderer
 {
 
     public function render(): string
     {
+        if (!($this->middleware instanceof Action)) {
+            return '';
+        }
+        $this->middleware->redirectIfExpected();
+
         $model = $this->middleware->getModel();
         if (!($model instanceof Response)) {
             return '';

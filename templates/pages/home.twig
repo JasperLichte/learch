@@ -1,0 +1,6 @@
+<ul>
+    {% for file in model.files %}
+        <li><a href="{{ url.to('/file/' ~ file.id) }}">{{ file.id }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{{ url.to('/api/v1/view/create-pdf?path=/news&next=/') }}">Create new</a>

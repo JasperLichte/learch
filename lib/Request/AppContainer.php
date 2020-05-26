@@ -39,9 +39,4 @@ abstract class AppContainer
 
     abstract public function run(): void;
 
-    final public function isView()
-    {
-        return ($this instanceof View);
-    }
-
 }

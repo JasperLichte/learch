@@ -2,6 +2,8 @@
 
 namespace Rendering;
 
+use Actions\Files\ShowFileAction;
+use Rendering\Views\View;
 use Request\AppContainer;
 
 abstract class Renderer
@@ -14,8 +16,11 @@ abstract class Renderer
 
     public static function byMiddleware(AppContainer $middleware): Renderer
     {
-        if ($middleware->isView()) {
+        if ($middleware instanceof View) {
             return new ViewRenderer($middleware);
+        }
+        if ($middleware instanceof ShowFileAction) {
+            return new FileRenderer($middleware);
         }
         return new ActionRenderer($middleware);
     }

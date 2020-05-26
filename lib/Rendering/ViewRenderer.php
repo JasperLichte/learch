@@ -2,7 +2,6 @@
 
 namespace Rendering;
 
-use Models\ResponseModel;
 use Request\AppContainer;
 use Twig\Environment;
 use Twig\Error\LoaderError;

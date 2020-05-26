@@ -12,12 +12,17 @@ use Routing\Router;
 
 try {
     $middleWare = (new Router())
-        ->view('/news', \Views\News\NewsView::class)
-        ->view('/strava', \Views\Strava\StravaView::class)
+        ->get('/', \Views\Home\HomeView::class)
+        ->get('/news', \Views\News\NewsView::class)
+        ->get('/strava', \Views\Strava\StravaView::class)
         ->group('/api', function (Router $router) {
             return $router
                 ->group('/v1', function (Router $router) {
                     return $router
+                        ->group('/view', function (Router $router) {
+                            return $router
+                                ->get('/create-pdf', \Actions\Views\CreatePdfAction::class);
+                        })
                         ->group('/strava', function (Router $router) {
                             return $router
                                 ->get('/authenticate', \Actions\Strava\StravaAuthenticateAction::class)
@@ -27,6 +32,10 @@ try {
                             return $router;
                         });
                 });
+        })
+        ->group('/file', function (Router $router) {
+            return $router
+                ->get('/([0-9]*)', \Actions\Files\ShowFileAction::class);
         })
         ->match(Request::fromGlobals());
 } catch (NoRouteMatchedException|MatchedNotAMiddlewareException $e) {
