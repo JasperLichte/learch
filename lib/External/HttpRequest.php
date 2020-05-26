@@ -15,12 +15,12 @@ class HttpRequest
     /**
      * @var string
      */
-    private $method = 'post';
+    private $method = 'get';
 
     /**
      * @var array
      */
-    private $body = null;
+    private $body = [];
 
     /**
      * @var string[]
@@ -56,10 +56,13 @@ class HttpRequest
         $curl = curl_init();
 
         switch (strtolower($this->method)) {
+            case 'get':
+                curl_setopt($curl, CURLOPT_HTTPGET, 1);
+                break;
             case 'post':
                 curl_setopt($curl, CURLOPT_POST, 1);
 
-                if (!empty($this->body)) {
+                if (count($this->body)) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $this->body);
                 }
                 break;

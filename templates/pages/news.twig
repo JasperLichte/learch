@@ -1,0 +1,9 @@
+<ul>
+    {% for story in model.hackerNewsModels %}
+        <li>
+            <a href="{{ story.url }}">
+                <h4>{{ story.title }}</h4>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
