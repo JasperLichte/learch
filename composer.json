@@ -4,6 +4,7 @@
   },
   "require": {
     "vlucas/phpdotenv": "^4.1",
-    "twig/twig": "^2.0"
+    "twig/twig": "^2.0",
+    "spiritix/html-to-pdf": "^2.0"
   }
 }
