@@ -1,7 +1,22 @@
 {% for article in news %}
-    <div>
-        <h4>{{ article.title }}</h4>
+    <div class="news-article">
+        <h4 class="__title">{{ article.title }}</h4>
         <p>{{ article.description }}</p>
-        <p><i>{{ article.author }}</i></p>
+        <p class="__author"><i>{{ article.author }}</i></p>
     </div>
 {% endfor %}
+
+<style>
+    .news-article {
+        border-left: 4px solid currentColor;
+        padding-left: 1em;
+    }
+
+    .news-article .__title {
+        font-weight: 200;
+    }
+
+    .news-article .__author {
+        font-size: .8em;
+    }
+</style>

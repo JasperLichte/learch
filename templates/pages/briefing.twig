@@ -1,0 +1,28 @@
+<header>
+    <h1>Briefing</h1>
+    <p>{{ model.date.format('F jS, Y H:i') }}</p>
+</header>
+<main>
+    <h2>Nachrichten</h2>
+    <h3>Allgemein</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.general} %}
+
+    <h3>Technik</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.technology} %}
+
+    <h3>Wissenschaft</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.science} %}
+
+    <h3>Wirtschaft</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.business} %}
+
+    <h3>Gesundheit</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.health} %}
+
+    <h3>Sport</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.sports} %}
+
+    <h3>Unterhaltung</h3>
+    {% include '@components/news/news-cat-list.twig' with {news: model.news.entertainment} %}
+
+</main>

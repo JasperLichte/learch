@@ -1,6 +1,6 @@
 <?php
 
-namespace Views\News;
+namespace Views\Briefing;
 
 use Config\EnvNotSetException;
 use External\NewsApi\NewsApi;
@@ -8,16 +8,19 @@ use Models\ResponseModel;
 use Rendering\Views\View;
 use Util\Url;
 
-class NewsView extends View
+class BriefingView extends View
 {
 
-    /** @var NewsViewModel */
+    /** @var BriefingViewModel */
     private $model;
 
     public function run(): void
     {
-        $this->model = new NewsViewModel($this->req->getRequestedPath($this->env));
-        $this->model->addCssFile(Url::to('/public/css/splendor.min.css'));
+        $this->model = new BriefingViewModel($this->req->getRequestedPath($this->env));
+        try {
+            $this->model->addCssFile(Url::to('/public/css/pages/briefing.css'));
+        } catch (EnvNotSetException $e) {
+        }
 
         try {
             $this->model->setNews((new NewsApi($this->env->get('NEWS_API_KEY')))->getNews());
@@ -32,6 +35,6 @@ class NewsView extends View
 
     function getTemplate(): string
     {
-        return '@pages/news';
+        return '@pages/briefing';
     }
 }

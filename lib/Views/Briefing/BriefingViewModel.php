@@ -1,13 +1,13 @@
 <?php
 
-namespace Views\News;
+namespace Views\Briefing;
 
 use DateTime;
 use External\HackerNews\Models\StoryModel;
 use External\NewsApi\Models\NewsModel;
 use Models\ViewModel;
 
-class NewsViewModel extends ViewModel
+class BriefingViewModel extends ViewModel
 {
 
     /** @var \DateTime */

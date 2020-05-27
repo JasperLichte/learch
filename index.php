@@ -13,7 +13,7 @@ use Routing\Router;
 try {
     $middleWare = (new Router())
         ->get('/', \Views\Home\HomeView::class)
-        ->get('/news', \Views\News\NewsView::class)
+        ->get('/briefing', \Views\Briefing\BriefingView::class)
         ->group('/api', function (Router $router) {
             return $router
                 ->group('/v1', function (Router $router) {

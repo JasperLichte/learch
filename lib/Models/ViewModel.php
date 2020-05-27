@@ -22,6 +22,7 @@ class ViewModel extends ResponseModel
         $this->path = $path;
         try {
             $this->addJsFile(Url::to('/public/js/bundle.js'));
+            $this->addCssFile(Url::to('/public/css/document/document.css'));
         } catch (EnvNotSetException $e) {
         }
     }
