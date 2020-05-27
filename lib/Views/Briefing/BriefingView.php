@@ -24,8 +24,9 @@ class BriefingView extends View
         }
 
         try {
-            (new OpenWeatherMapApi($this->env->get('OPENWEATHERMAP_API_KEY')))->getForecast();
-
+            $this->model->setForecast(
+                (new OpenWeatherMapApi($this->env->get('OPENWEATHERMAP_API_KEY')))->getForecast()
+            );
             $this->model->setNews((new NewsApi($this->env->get('NEWS_API_KEY')))->getNews());
         } catch (EnvNotSetException $e) {
         }

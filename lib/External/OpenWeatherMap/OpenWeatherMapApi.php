@@ -3,6 +3,8 @@
 namespace External\OpenWeatherMap;
 
 use External\HttpRequest;
+use External\OpenWeatherMap\Models\CurrentWeatherModel;
+use External\OpenWeatherMap\Models\ForecastModel;
 use Util\Url;
 
 class OpenWeatherMapApi
@@ -17,6 +19,9 @@ class OpenWeatherMapApi
     /** @var array */
     private $getParams = [];
 
+    /** @var string */
+    private $language = 'de';
+
     /** @var float */
     private $lon = 0;
 
@@ -26,7 +31,10 @@ class OpenWeatherMapApi
     public function __construct(string $apiKey)
     {
         $this->httpRequest = new HttpRequest();
-        $this->getParams = ['appid' => $apiKey,];
+        $this->getParams = [
+            'appid' => $apiKey,
+            'units' => 'metric',
+        ];
     }
 
     public function setLon(float $lon): OpenWeatherMapApi
@@ -41,15 +49,23 @@ class OpenWeatherMapApi
         return $this;
     }
 
-    public function getForecast()
+    public function setLanguage(string $language): void
+    {
+        $this->language = $language;
+    }
+
+    public function getForecast(): ForecastModel
     {
         $result = $this->httpRequest->setUrl(
             (new Url(self::BASE_URL . '/onecall'))->addGetParams(array_merge($this->getParams, [
-                'lat' => $this->lat,
-                'lon' => $this->lon,
+                'lat'  => $this->lat,
+                'lon'  => $this->lon,
+                'lang' => $this->language,
             ]))
         )->run();
-        //var_dump($result);exit();
+
+        return (new ForecastModel())
+            ->setCurrent((new CurrentWeatherModel())->deserialize($result['current'] ?? []));
     }
 
 }

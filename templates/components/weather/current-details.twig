@@ -1,0 +1,23 @@
+<div class="current-weather-details">
+    <p class="__description"><i>{{ forecast.current.weather.description }}</i></p>
+    <table class="__details-table">
+        <tr><td>Temperatur</td><td>{{ forecast.current.temp }}°</td></tr>
+        <tr><td>Gefühlt</td><td>{{ forecast.current.feelsLikeTemp }}°</td></tr>
+        <tr><td>Wolken</td><td>{{ forecast.current.clouds }}%</td></tr>
+        <tr><td>Wind</td><td>{{ forecast.current.windSpeed }}m/s</td></tr>
+        <tr><td>Böen</td><td>{{ forecast.current.windGust }}m/s</td></tr>
+    </table>
+</div>
+
+<style>
+
+    .current-weather-details .__description {
+        font-size: 1.4em;
+    }
+
+    .current-weather-details .__details-table tr td:first-of-type:after {
+        content: ':';
+        padding-right: 1em;
+    }
+
+</style>

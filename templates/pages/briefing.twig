@@ -3,6 +3,10 @@
     <p>{{ model.date.format('F jS, Y H:i') }}</p>
 </header>
 <main>
+    <h2>Wetter</h2>
+    <h3>Jetzt</h3>
+    {% include '@components/weather/current-details.twig' with {forecast: model.forecast} %}
+
     <h2>Nachrichten</h2>
     <h3>Allgemein</h3>
     {% include '@components/news/news-cat-list.twig' with {news: model.news.general} %}
