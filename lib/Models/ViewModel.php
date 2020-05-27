@@ -2,18 +2,28 @@
 
 namespace Models;
 
+use Config\EnvNotSetException;
+use Util\Url;
+
 class ViewModel extends ResponseModel
 {
 
     private $title = '';
     private $language = '';
-    private $JsFiles = ['bundle.js'];
     private $path = '';
+    /** @var Url[] */
+    private $jsFiles = [];
+    /** @var Url[] */
+    private $cssFiles = [];
 
     public function __construct(string $path)
     {
         $this->language = 'en';
         $this->path = $path;
+        try {
+            $this->addJsFile(Url::to('/public/js/bundle.js'));
+        } catch (EnvNotSetException $e) {
+        }
     }
 
     public function setTitle(string $title): ViewModel
@@ -32,15 +42,26 @@ class ViewModel extends ResponseModel
         return $this->language;
     }
 
-    public function setJsFiles(array $JsFiles): ViewModel
+    public function addJsFile(Url $jsFile): ViewModel
     {
-        $this->JsFiles = $JsFiles;
+        $this->jsFiles[] = $jsFile;
         return $this;
     }
 
     public function getJsFiles(): array
     {
-        return $this->JsFiles;
+        return $this->jsFiles;
+    }
+
+    public function getCssFiles(): array
+    {
+        return $this->cssFiles;
+    }
+
+    public function addCssFile(Url $cssFile): ViewModel
+    {
+        $this->cssFiles[] = $cssFile;
+        return $this;
     }
 
     public function getPath(): string

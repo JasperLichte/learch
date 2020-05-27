@@ -1,0 +1,7 @@
+{% for article in news %}
+    <div>
+        <h4>{{ article.title }}</h4>
+        <p>{{ article.description }}</p>
+        <p><i>{{ article.author }}</i></p>
+    </div>
+{% endfor %}

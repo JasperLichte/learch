@@ -1,9 +1,24 @@
-<ul>
-    {% for story in model.hackerNewsModels %}
-        <li>
-            <a href="{{ story.url }}">
-                <h4>{{ story.title }}</h4>
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+<p>{{ model.date.format('F jS, Y H:i') }}</p>
+
+<h1>Nachrichten</h1>
+
+<h2>Allgemein</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.general} %}
+
+<h2>Technik</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.technology} %}
+
+<h2>Wissenschaft</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.science} %}
+
+<h2>Wirtschaft</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.business} %}
+
+<h2>Gesundheit</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.health} %}
+
+<h2>Sport</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.sports} %}
+
+<h2>Unterhaltung</h2>
+{% include '@components/news/news-cat-list.twig' with {news: model.news.entertainment} %}

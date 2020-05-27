@@ -3,12 +3,10 @@
 namespace Files;
 
 use Database\Connection;
+use DateTime;
 
-class File
+class File extends BasicFileModel
 {
-
-    /** @var int */
-    private $id = 0;
 
     /** @var string */
     private $mime = '';
@@ -27,17 +25,6 @@ class File
         return $this->mime;
     }
 
-    public function setId(int $id): File
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
     public function getData(): string
     {
         return $this->data;
@@ -52,16 +39,22 @@ class File
 
     public static function load(Connection $db, int $id): ?File
     {
-        $stmt = $db->getPdo()->prepare('SELECT data, mime FROM files WHERE id = ?');
+        $stmt = $db->getPdo()->prepare('SELECT data, mime, time FROM files WHERE id = ?');
         $stmt->execute([$id]);
         $item = $stmt->fetch();
         if (!is_array($item) || !count($item)) {
             return null;
         }
 
-        return (new File())
+        $file = (new File())
             ->setMime($item['mime'])
             ->setData($item['data']);
+
+        try {
+            $file->setTime(new DateTime($item['time']));
+        } catch (\Exception $e) {
+        }
+        return $file;
     }
 
 }

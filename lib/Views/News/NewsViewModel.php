@@ -2,26 +2,40 @@
 
 namespace Views\News;
 
+use DateTime;
 use External\HackerNews\Models\StoryModel;
+use External\NewsApi\Models\NewsModel;
 use Models\ViewModel;
 
 class NewsViewModel extends ViewModel
 {
 
-    /**
-     * @var StoryModel[]
-     */
-    private $hackerNewsModels = [];
+    /** @var \DateTime */
+    private $date;
 
-    public function setHackerNewsModels(array $hackerNewsModels): NewsViewModel
+    /** @var NewsModel */
+    private $news;
+
+    public function __construct(string $path)
     {
-        $this->hackerNewsModels = $hackerNewsModels;
-        return $this;
+        parent::__construct($path);
+
+        $this->date = new DateTime();
     }
 
-    public function getHackerNewsModels(): array
+    public function getDate(): DateTime
     {
-        return $this->hackerNewsModels;
+        return $this->date;
+    }
+
+    public function getNews(): NewsModel
+    {
+        return $this->news;
+    }
+
+    public function setNews(NewsModel $news): void
+    {
+        $this->news = $news;
     }
 
 }

@@ -2,9 +2,11 @@
 
 namespace Views\News;
 
-use External\HackerNews\HackerNewsApi;
+use Config\EnvNotSetException;
+use External\NewsApi\NewsApi;
 use Models\ResponseModel;
 use Rendering\Views\View;
+use Util\Url;
 
 class NewsView extends View
 {
@@ -15,9 +17,12 @@ class NewsView extends View
     public function run(): void
     {
         $this->model = new NewsViewModel($this->req->getRequestedPath($this->env));
-        $this->model->setHackerNewsModels(
-            (new HackerNewsApi())->getTopStories($this->req->issetGet('count') ? (int)$this->req->getGet('count') : 25)
-        );
+        $this->model->addCssFile(Url::to('/public/css/splendor.min.css'));
+
+        try {
+            $this->model->setNews((new NewsApi($this->env->get('NEWS_API_KEY')))->getNews());
+        } catch (EnvNotSetException $e) {
+        }
     }
 
     public function getModel(): ResponseModel

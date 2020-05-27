@@ -10,9 +10,8 @@
     <script>
         window.__PATH = "{{ model.path }}";
     </script>
-    {% for file in model.jsFiles %}
-        <script src="./public/js/{{ file }}"></script>
-    {% endfor %}
+    {% for url in model.jsFiles %}<script src="{{ url }}"></script>{% endfor %}
+    {% for url in model.cssFiles %}<link rel="stylesheet" href="{{ url }}">{% endfor %}
 </head>
 <body>
 

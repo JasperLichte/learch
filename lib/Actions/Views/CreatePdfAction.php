@@ -40,6 +40,9 @@ class CreatePdfAction extends Action
         $input->setUrl((string)Url::to($path));
 
         $converter = new Converter($input, new StringOutput());
+        $converter->setOptions([
+            'title' => 'Briefing',
+        ]);
         $output = $converter->convert();
 
         return $this->storePdf($output->get());

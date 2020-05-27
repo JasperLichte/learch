@@ -79,7 +79,6 @@ class HttpRequest
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
         $result = curl_exec($curl);
-        curl_close($curl);
 
         try {
             $json = json_decode($result, true);

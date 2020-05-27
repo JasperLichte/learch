@@ -15,6 +15,7 @@ class HomeView extends View
     public function run(): void
     {
         $this->model = new HomeViewModel($this->req->getRequestedPath($this->env));
+        $this->model->setTitle('Home');
         $this->model->setFiles(BasicFileModel::loadAll($this->db));
     }
 

@@ -1,5 +1,64 @@
 [
     {
+        "name": "eloquent/composer-npm-bridge",
+        "version": "4.1.0",
+        "version_normalized": "4.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eloquent/composer-npm-bridge.git",
+            "reference": "d2837b33da4eaa79c661788c621fc2d1a71da64d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/eloquent/composer-npm-bridge/zipball/d2837b33da4eaa79c661788c621fc2d1a71da64d",
+            "reference": "d2837b33da4eaa79c661788c621fc2d1a71da64d",
+            "shasum": ""
+        },
+        "require": {
+            "composer-plugin-api": "^1",
+            "php": ">=7"
+        },
+        "require-dev": {
+            "composer/composer": "dev-master",
+            "eloquent/phony-phpunit": "^3",
+            "errors/exceptions": "^0.2",
+            "phpunit/phpunit": "^6"
+        },
+        "time": "2018-12-06T01:02:45+00:00",
+        "type": "composer-plugin",
+        "extra": {
+            "class": "Eloquent\\Composer\\NpmBridge\\NpmBridgePlugin"
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Eloquent\\Composer\\NpmBridge\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Erin Millard",
+                "email": "ezzatron@gmail.com",
+                "homepage": "http://ezzatron.com/"
+            }
+        ],
+        "description": "NPM integration for Composer packages.",
+        "homepage": "https://github.com/eloquent/composer-npm-bridge",
+        "keywords": [
+            "Bridge",
+            "composer",
+            "composer-plugin",
+            "integration",
+            "npm",
+            "package",
+            "plugin"
+        ]
+    },
+    {
         "name": "h4cc/wkhtmltopdf-amd64",
         "version": "0.12.3",
         "version_normalized": "0.12.3.0",
@@ -470,6 +529,58 @@
             "pdf",
             "php",
             "print"
+        ]
+    },
+    {
+        "name": "spiritix/php-chrome-html2pdf",
+        "version": "v1.4.1",
+        "version_normalized": "1.4.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/spiritix/php-chrome-html2pdf.git",
+            "reference": "4411b40e8348f0ea3cf27015eea6abcf567b9fa6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/spiritix/php-chrome-html2pdf/zipball/4411b40e8348f0ea3cf27015eea6abcf567b9fa6",
+            "reference": "4411b40e8348f0ea3cf27015eea6abcf567b9fa6",
+            "shasum": ""
+        },
+        "require": {
+            "eloquent/composer-npm-bridge": "^4",
+            "php": ">=7.0"
+        },
+        "require-dev": {
+            "codeclimate/php-test-reporter": "dev-master",
+            "phpunit/phpunit": "~5.0"
+        },
+        "time": "2019-11-11T14:15:37+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Spiritix\\Html2Pdf\\": "src/Spiritix/Html2Pdf/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Matthias Isler",
+                "email": "mi@matthias-isler.ch"
+            }
+        ],
+        "description": "A PHP library for converting HTML to PDF using Google Chrome",
+        "keywords": [
+            "chrome",
+            "headless",
+            "html",
+            "html2pdf",
+            "pdf",
+            "php",
+            "puppeteer"
         ]
     },
     {
