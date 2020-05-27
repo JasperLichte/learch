@@ -4,6 +4,7 @@ namespace Actions\Views;
 
 use Api\Action;
 use Config\EnvNotSetException;
+use DateTime;
 use Spiritix\HtmlToPdf\Converter;
 use Spiritix\HtmlToPdf\Input\UrlInput;
 use Spiritix\HtmlToPdf\Output\StringOutput;
@@ -41,7 +42,7 @@ class CreatePdfAction extends Action
 
         $converter = new Converter($input, new StringOutput());
         $converter->setOptions([
-            'title' => 'Briefing',
+            'title' => 'Briefing ' . (new DateTime())->format('F jS, Y H:i'),
         ]);
         $output = $converter->convert();
 

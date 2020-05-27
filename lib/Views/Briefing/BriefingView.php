@@ -4,6 +4,7 @@ namespace Views\Briefing;
 
 use Config\EnvNotSetException;
 use External\NewsApi\NewsApi;
+use External\OpenWeatherMap\OpenWeatherMapApi;
 use Models\ResponseModel;
 use Rendering\Views\View;
 use Util\Url;
@@ -23,6 +24,8 @@ class BriefingView extends View
         }
 
         try {
+            (new OpenWeatherMapApi($this->env->get('OPENWEATHERMAP_API_KEY')))->getForecast();
+
             $this->model->setNews((new NewsApi($this->env->get('NEWS_API_KEY')))->getNews());
         } catch (EnvNotSetException $e) {
         }
